@@ -79,7 +79,7 @@ fun ProductListComponent(
 
                 Row(
                     Modifier
-                        .widthIn(min = 108.dp) 
+                        .widthIn(min = 108.dp)
                         .height(36.dp)
                         .background(
                             colorResource(

@@ -93,112 +93,104 @@ fun ProductScreen(
                 Dialog(
                     onDismissRequest = { },
                 ) {
-                    Box(
+                    Column(
                         Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .background(
+                                colorResource(R.color.salt_white_ice_break),
+                                RoundedCornerShape(16.dp)
+                            )
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Column(
+                        Text(
+                            "Success!",
+                            fontFamily = FiraSans,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 20.sp,
+                            color = colorResource(R.color.salt_dark_hot)
+                        )
+
+                        Text(
+                            dialogText,
+                            fontFamily = FiraSans,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            color = colorResource(R.color.salt_dark_hot),
+                            modifier = Modifier.padding(top = 12.dp)
+                        )
+
+                        RoundedButtonComponent(
+                            "Close",
+                            ButtonStyle.ACTIVATED,
                             Modifier
+                                .padding(top = 24.dp)
                                 .fillMaxWidth()
-                                .background(
-                                    colorResource(R.color.salt_white_ice_break),
-                                    RoundedCornerShape(16.dp)
-                                )
-                                .padding(24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text(
-                                "Success!",
-                                fontFamily = FiraSans,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 20.sp,
-                                color = colorResource(R.color.salt_dark_hot)
-                            )
-
-                            Text(
-                                dialogText,
-                                fontFamily = FiraSans,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center,
-                                color = colorResource(R.color.salt_dark_hot),
-                                modifier = Modifier.padding(top = 12.dp)
-                            )
-
-                            RoundedButtonComponent(
-                                "Close",
-                                ButtonStyle.ACTIVATED,
-                                Modifier
-                                    .padding(top = 24.dp)
-                                    .fillMaxWidth()
-                            ) {
-                                showCheckoutDialog = false
-                                viewModel.reset()
-                            }
+                            showCheckoutDialog = false
+                            viewModel.reset()
                         }
                     }
                 }
             } else if (showSortDialog) {
 
                 Dialog(
-                    onDismissRequest = { },
+                    onDismissRequest = { showSortDialog = false },
                 ) {
-                    Box(
+                    val sortOptions = SortOption.entries.map { it.value }
+
+                    Column(
                         Modifier
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                            .fillMaxWidth()
+                            .background(
+                                colorResource(R.color.salt_white_ice_break),
+                                RoundedCornerShape(16.dp)
+                            )
+                            .padding(24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val sortOptions = SortOption.entries.map { it.value }
-
-                        Column(
-                            Modifier
-                                .fillMaxWidth()
-                                .background(
-                                    colorResource(R.color.salt_white_ice_break),
-                                    RoundedCornerShape(16.dp)
-                                )
-                                .padding(24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            sortOptions.forEach { option ->
-                                Row(
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .clickable { selectedOption = option }
-                                        .padding(8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    RadioButton(
-                                        selected = selectedOption == option,
-                                        onClick = { selectedOption = option }
-                                    )
-
-                                    Text(
-                                        option,
-                                        Modifier.padding(horizontal = 8.dp)
-                                    )
-                                }
-
-                                HorizontalDivider(
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 8.dp),
-                                    thickness = 1.dp,
-                                    color = colorResource(R.color.salt_gray)
-                                )
-                            }
-
-                            RoundedButtonComponent(
-                                "Apply",
-                                ButtonStyle.ACTIVATED,
+                        sortOptions.forEach { option ->
+                            Row(
                                 Modifier
-                                    .padding(top = 12.dp)
                                     .fillMaxWidth()
+                                    .clickable { selectedOption = option }
+                                    .padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                viewModel.sortBy(selectedOption)
-                                showSortDialog = false
+                                RadioButton(
+                                    selected = selectedOption == option,
+                                    onClick = { selectedOption = option }
+                                )
+
+                                Text(
+                                    option,
+                                    fontFamily = FiraSans,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 14.sp,
+                                    color = colorResource(R.color.salt_dark),
+                                    modifier = Modifier.padding(horizontal = 8.dp)
+                                )
                             }
+
+                            HorizontalDivider(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp),
+                                thickness = 1.dp,
+                                color = colorResource(R.color.salt_gray)
+                            )
+                        }
+
+                        RoundedButtonComponent(
+                            "Apply",
+                            ButtonStyle.ACTIVATED,
+                            Modifier
+                                .padding(top = 12.dp)
+                                .fillMaxWidth()
+                        ) {
+                            viewModel.sortBy(selectedOption)
+                            showSortDialog = false
                         }
                     }
                 }
