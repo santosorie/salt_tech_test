@@ -42,6 +42,8 @@ import com.example.salttech.ui.screen.ProductUiState
 import com.example.salttech.ui.screen.ProductViewModel
 import com.example.salttech.ui.screen.SortOption
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.salttech.ui.component.CheckoutDialogComponent
+import com.example.salttech.ui.component.SortDialogComponent
 
 @Composable
 fun ProductScreen(
@@ -90,110 +92,23 @@ fun ProductScreen(
         ) {
 
             if (showCheckoutDialog) {
-                Dialog(
-                    onDismissRequest = { },
-                ) {
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .background(
-                                colorResource(R.color.salt_white_ice_break),
-                                RoundedCornerShape(16.dp)
-                            )
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            "Success!",
-                            fontFamily = FiraSans,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 20.sp,
-                            color = colorResource(R.color.salt_dark_hot)
-                        )
-
-                        Text(
-                            dialogText,
-                            fontFamily = FiraSans,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            textAlign = TextAlign.Center,
-                            color = colorResource(R.color.salt_dark_hot),
-                            modifier = Modifier.padding(top = 12.dp)
-                        )
-
-                        RoundedButtonComponent(
-                            "Close",
-                            ButtonStyle.ACTIVATED,
-                            Modifier
-                                .padding(top = 24.dp)
-                                .fillMaxWidth()
-                        ) {
-                            showCheckoutDialog = false
-                            viewModel.reset()
-                        }
+                CheckoutDialogComponent(
+                    dialogText,
+                    onCloseButtonClicked = {
+                        viewModel.reset()
+                        showCheckoutDialog = false
                     }
-                }
+                )
             } else if (showSortDialog) {
-
-                Dialog(
+                SortDialogComponent(
+                    selectedOption,
+                    onClickOption = { selectedOption = it },
                     onDismissRequest = { showSortDialog = false },
-                ) {
-                    val sortOptions = SortOption.entries.map { it.value }
-
-                    Column(
-                        Modifier
-                            .fillMaxWidth()
-                            .background(
-                                colorResource(R.color.salt_white_ice_break),
-                                RoundedCornerShape(16.dp)
-                            )
-                            .padding(24.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        sortOptions.forEach { option ->
-                            Row(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .clickable { selectedOption = option }
-                                    .padding(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                RadioButton(
-                                    selected = selectedOption == option,
-                                    onClick = { selectedOption = option }
-                                )
-
-                                Text(
-                                    option,
-                                    fontFamily = FiraSans,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 14.sp,
-                                    color = colorResource(R.color.salt_dark),
-                                    modifier = Modifier.padding(horizontal = 8.dp)
-                                )
-                            }
-
-                            HorizontalDivider(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp),
-                                thickness = 1.dp,
-                                color = colorResource(R.color.salt_gray)
-                            )
-                        }
-
-                        RoundedButtonComponent(
-                            "Apply",
-                            ButtonStyle.ACTIVATED,
-                            Modifier
-                                .padding(top = 12.dp)
-                                .fillMaxWidth()
-                        ) {
-                            viewModel.sortBy(selectedOption)
-                            showSortDialog = false
-                        }
+                    onClickApply = {
+                        viewModel.sortBy(selectedOption)
+                        showSortDialog = false
                     }
-                }
+                )
             }
 
             when (state) {
