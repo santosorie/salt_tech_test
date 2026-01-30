@@ -1,6 +1,14 @@
 Hi this is app for salt tech interview
 
-to install this pleaase install android studio for for IDE and Compiler
+to download directly into your phone please open this apk file from your phone
+https://drive.google.com/file/d/1Wt0KIWrK4zBObQR5dEaW1XcYDlBqhLOp/view?usp=sharing
+
+or to view the video of the app please open this link
+https://drive.google.com/file/d/1W6o-wtvSVxEWBknoIWQj9ylEnRzDqpzf/view?usp=sharing
+
+
+
+to test the code this pleaase install android studio for for IDE and Compiler
 
 then clone this repo into local by type this command in your termina
 git clone https://github.com/santosorie/salt_tech_test.git
